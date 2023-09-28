@@ -1,7 +1,7 @@
 ## Mobile Restaurant Menu
 <p>
   <strong> My Solo Project</strong> from the <strong>Essential Javascript concepts</strong>  course, by 
-  <a href="scrimba.com" target="_blank">
+  <a target="_blank" href="https://scrimba.com/" >
     <strong>scrimba</strong>
   </a>
 </p>
