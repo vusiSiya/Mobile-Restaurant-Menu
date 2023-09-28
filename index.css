@@ -1,0 +1,94 @@
+
+html,body{
+    margin: 0;
+    font: 1.5rem Smythe;
+}
+
+header{
+    color:white;
+    display: grid;
+    grid-template-columns: repeat(15,1fr);
+    grid-template-rows: repeat(7,auto);
+    gap: .5em;
+}
+
+svg{
+    position: relative;
+    width: 100%;
+    height: 380px;
+    z-index:0;
+    grid-area: 1/1/-1/-1;
+}
+
+header > h1, header > p{
+    z-index: 1;
+    grid-area: 2/2/3/-1;
+    margin: 0;
+    font-family: Smythe;
+}
+header > h1 {
+    font-weight:normal;
+}
+
+header > p {
+    grid-area: 3/2/5/-1;
+}
+.menu-item{
+    display: flex;
+    flex-wrap: nowrap;
+    width:-webkit-fill-available;
+    margin: .5em;
+    gap: 1em;
+    font-size: 1.3rem;
+    align-content: space-around;
+}
+
+.ingredients, .remove{
+    color: grey;
+}
+
+.remove {
+    font-size: .9rem;
+    margin: auto 1.3em 1.5em;
+}
+
+.menu {
+    width: 100%;
+}
+
+main {
+    width: auto;
+    display: grid;
+    grid-row-gap: 1em;
+    margin: 1.5em;
+    padding: .5em;
+}
+
+.add-btn {
+    border-radius: 100%;
+    border: 1px solid grey;
+    background-color: transparent;
+    color: gray;
+    padding: .5em .8em;
+    font-size: 2rem;
+    font-weight: normal;
+    margin:auto 0 auto auto;
+}
+
+span {
+    font-size: 3em;
+}
+
+.ordered-items > div, .total{
+    display: flex;
+    justify-content: space-between;
+}
+
+.ordered-items > div > div {
+    display: flex;
+    align-items: center;
+}
+
+.modal{
+    display:grid;
+}
