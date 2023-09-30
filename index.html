@@ -38,7 +38,6 @@
 
         <!--orders -->
         <section class="orders" style="display:none;">
-
             <h4 class="orders-header">Your orders</h4>
             <div class="ordered-items"></div>
             <h4 class="total">
@@ -51,12 +50,15 @@
         <!--modal-->
 
         <div class="modal" style="display:none;">
+            <div style="display:flex; justify-content:flex-end;">
+                <button class="close-modal-btn">X</button>
+            </div>
             <h2>Enter Card Details</h2>
             <form>
                 <input type="text" placeholder="Enter Your Name" />
                 <input type="number" placeholder="Enter Your Card Number" />
                 <input type="number" placeholder="Enter Your CVV" />
-                <button type="submit" onsubmit="handleSubmit">Pay</button>
+                <button type="button" class="payment-btn">Pay</button>
             </form>
         </div>
     </main>

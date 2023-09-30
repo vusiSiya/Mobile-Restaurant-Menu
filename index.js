@@ -1,7 +1,7 @@
 const menuContainer = document.querySelector(".menu");
 const orderedItemsContainer = document.querySelector(".ordered-items");
 const ordersContainer = document.querySelector(".orders");
-const paymentModal = document.querySelector(".modal");
+const modal = document.querySelector(".modal");
 
 const menuArray = [{
     id: 0,
@@ -22,8 +22,10 @@ const menuArray = [{
     price: 12,
     emoji: "🍺",
 }]
-let orderdItems = [];
-let itemsAreRemoved = false
+
+let orderedItems = [];
+let itemsAreRemoved = false;
+
 render();
 
 document.addEventListener("click", (e) =>{
@@ -31,11 +33,17 @@ document.addEventListener("click", (e) =>{
         case "add-btn":
             addToCart(e);
             break;
-        case "orders-btn":
-            completeOrder(e);
-            break;
         case "remove":
             addToCart(e)
+            break;
+        case "orders-btn":
+            displayElement(modal, true);
+            break;
+         case "close-modal-btn":
+            displayElement(modal, false);
+            break;
+        case "payment-btn":
+            handleSubmit(e)
             break;
         default:
             break;
@@ -44,9 +52,9 @@ document.addEventListener("click", (e) =>{
 })
 function render() {
 
-    const ordersMarkUp = menuArray.reduce((acc, item) => {
+    const menuMarkUp = menuArray.reduce((acc, item) => {
         return acc + (
-            `<div class="menu-item" style="display:flex">
+            `<div class="menu-item" >
                 <span>${item.emoji}</span>
                 <div>
                     <h4>${item.name}</h4>
@@ -58,12 +66,12 @@ function render() {
         );
     }, "");
 
-    menuContainer.innerHTML = ordersMarkUp;
+    menuContainer.innerHTML = menuMarkUp;
     
-    if (orderdItems[0] || itemsAreRemoved) {
+    if (orderedItems[0] || itemsAreRemoved) {
         ordersContainer.style.display = "grid"
         let totalPrice = 0
-        orderedItemsContainer.innerHTML = orderdItems.reduce((acc, item) => {
+        orderedItemsContainer.innerHTML = orderedItems.reduce((acc, item) => {
             totalPrice += item.price;
             return acc + (
                 `<div>
@@ -82,26 +90,39 @@ function addToCart(event) {
     const {id,className,parentElement} = event.target
     
     if(className === "add-btn"){
-        orderdItems.push(menuArray[id])
+        orderedItems.push(menuArray[id])
     }
     else {
-        let itemsNotRemoved = orderdItems.filter(item => item.id != parentElement.id);
-        orderdItems = itemsNotRemoved;
+        let parentId = parseInt(parentElement.id)
+        let matchingItems = orderedItems.filter(item => item.id === parentId)
+        let itemsNotMatching = orderedItems.filter(item => item.id != parentId)
+
+        let firstEl = matchingItems[0];
+        matchingItems.pop(firstEl)
+        
+        let newArray = [...matchingItems, ...itemsNotMatching ];
+        orderedItems = newArray;
+        
         itemsAreRemoved = true;
     }
 
     render()   
 }
-function completeOrder(e) {
-    paymentModal.style.display ="grid"
+function displayElement(element, showElement) {
+    element.style.display = showElement ? "grid" : "none"
 }
+
+
 function handleSubmit(event) {
     event.preventDefault();
+    displayElement(modal, false);
+    displayElement(ordersContainer, false);
+    
     let container = document.createElement("div");
     let paragraph = document.createElement("p");
     paragraph.classList.add("orders-delivery");
     paragraph.textContent = "Thank you, Your order is on its way";
-
+    
     container.append(paragraph);
-    ordersContainer.append(container);
+    document.querySelector("main").append(container);
 }
