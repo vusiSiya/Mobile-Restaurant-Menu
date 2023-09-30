@@ -5,11 +5,11 @@
     <strong>scrimba</strong>
   </a>
 </p>
-<!--<h3>
-  <a href="">
+<h3>
+  <a href="https://siyabonga-mobile-restaurant-menu.netlify.app/">
     <strong>Live Demo</strong>
   </a>🚀
-</h3> -->
+</h3>
 
 ## Languages:
 * **JavaScript**
