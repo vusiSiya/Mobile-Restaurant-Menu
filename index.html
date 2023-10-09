@@ -5,13 +5,13 @@
     <meta viewport="meta"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Smythe&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Overpass:wght@700&family=Smythe&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./index.css" />
     <title> Mobile Restaurant Menu</title>
 </head>
 <body>
     <header>
-        <h1>Siyabonga's Dinner</h1>
+        <h1>Siya's Dinner</h1>
         <p>The best pizzas and burgers in town</p>
 
         <!--background image svg -->
@@ -40,10 +40,6 @@
         <section class="orders" style="display:none;">
             <h4 class="orders-header">Your orders</h4>
             <div class="ordered-items"></div>
-            <h4 class="total">
-                Total price:
-                <p class="total-price"></p>
-            </h4>
             <button type="button" class="orders-btn">Complete your orders</button>
         </section>
 
@@ -53,12 +49,14 @@
             <div style="display:flex; justify-content:flex-end;">
                 <button class="close-modal-btn">X</button>
             </div>
+            
             <h2>Enter Card Details</h2>
-            <form>
-                <input type="text" placeholder="Enter Your Name" />
-                <input type="number" placeholder="Enter Your Card Number" />
-                <input type="number" placeholder="Enter Your CVV" />
-                <button type="button" class="payment-btn">Pay</button>
+            <form> 
+                <input required type="text"  name="username" placeholder="Enter Your Name" />
+                <input required type="number"  name="card-number" placeholder="Enter Your Card Number" />
+                <input required type="number"  name="cvv-number" placeholder="Enter Your CVV" />
+                <!--<button type="submit" class="payment-btn">Pay</button>-->
+                <button class="payment-btn">Pay</button>
             </form>
         </div>
     </main>

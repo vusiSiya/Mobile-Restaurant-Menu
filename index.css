@@ -4,16 +4,8 @@ html,body{
     font: 1.5rem Smythe;
 }
 
-* {
-}
-
-.orders-header, .modal > h2 {
-    text-align: center;
-    margin: .25em;
-}
-
-.orders {
-    margin: auto 1.2em;
+body {
+    height: 100%;
 }
 
 header{
@@ -45,6 +37,33 @@ header > h1 {
 header > p {
     grid-area: 3/2/5/-1;
 }
+
+main {
+    width: auto;
+    display: grid;
+    grid-row-gap: 1em;
+    padding: .5em;
+}
+
+.menu {
+    width: 100%;
+}
+
+.add-btn {
+    border-radius: 100%;
+    border: 1px solid grey;
+    background-color: transparent;
+    color: gray;
+    padding: .5em .8em;
+    font-size: 2rem;
+    font-weight: normal;
+    margin:auto 0 auto auto;
+}
+
+.add-btn:hover {
+    box-shadow: 0 0 20px 5px gray;
+}
+
 .menu-item{
     display: flex;
     flex-wrap: nowrap;
@@ -60,6 +79,17 @@ header > p {
     color: grey;
 }
 
+.orders-header, .modal > h2 {
+    text-align: center;
+    margin: .25em;
+    font-family: Overpass;
+}
+
+.orders {
+    margin: auto 1.2em;
+    display: grid;
+}
+
 .remove {
     font-size: .9rem;
     margin: auto 1.3em 1.5em;
@@ -72,57 +102,37 @@ header > p {
 button {
     padding: .5em;
     font: bold 1.5rem Arial;
-    background-color: #0dcbb7;
+    background-color: #16DB99;
     color: white;
     border-radius: .5rem;
     border: none;
     margin: .5em 0;
 }
 
-.close-modal-btn {
-    border-radius: .3rem;
-    border: 1px solid;
-    margin: 0;
-    /* color: #0dcbb7; */
-    /* background-color: transparent; */
-    padding: .3em .5em;
-}
-.menu {
-    width: 100%;
-}
 
-main {
-    width: auto;
-    display: grid;
-    grid-row-gap: 1em;
-    /* margin: 1em; */
+.order-complete-message{
+    text-align: center;
     padding: .5em;
-}
-
-.add-btn {
-    border-radius: 100%;
-    border: 1px solid grey;
-    background-color: transparent;
-    color: gray;
-    padding: .5em .8em;
-    font-size: 2rem;
-    font-weight: normal;
-    margin:auto 0 auto auto;
-}
-
-span {
-    font-size: 7rem;
-    width: 1.25em;
+    background-color: green;
+    color: white;
+    border-radius: .5rem;
+    font-size: inherit;
 }
 
 .ordered-items > div, .total{
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
 }
 
 .ordered-items > div > div {
     display: flex;
     align-items: center;
+}
+
+span {
+    font-size: 7rem;
+    width: 1.25em;
 }
 
 .modal{
@@ -132,7 +142,7 @@ span {
     bottom: 1em;
     left: 1.5em;
     right: 1.5em;
-    font-family: sans-serif;
+    font-family: OverPass;
     display: grid;
     box-shadow: 0 0 20px 5px gray;
     border-radius: .25rem;
@@ -141,15 +151,21 @@ span {
     height: max-content;
 }
 
+.close-modal-btn {
+    border-radius: .3rem;
+    border: 1px solid;
+    margin: 0;
+    padding: .3em .5em;
+}
+
 form {
     display: flex;
     flex-direction: column;
     gap: 1.25em;
-    /* font-size: 1.5rem; */
 }
 
 input {
     font-size: 1.3rem;
     padding: .5em;
-    font-family: sans-serif;
+    font-family: OverPass;
 }

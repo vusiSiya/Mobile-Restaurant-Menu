@@ -1,7 +1,7 @@
 const menuContainer = document.querySelector(".menu");
-const orderedItemsContainer = document.querySelector(".ordered-items");
 const ordersContainer = document.querySelector(".orders");
 const modal = document.querySelector(".modal");
+const form = document.querySelector("form");
 
 const menuArray = [{
     id: 0,
@@ -25,8 +25,11 @@ const menuArray = [{
 
 let orderedItems = [];
 let itemsAreRemoved = false;
+let showMessage;
 
 render();
+
+form.addEventListener("submit",(e)=>handleSubmit(e))
 
 document.addEventListener("click", (e) =>{
     switch(e.target.className){
@@ -39,20 +42,18 @@ document.addEventListener("click", (e) =>{
         case "orders-btn":
             displayElement(modal, true);
             break;
-         case "close-modal-btn":
+        case "close-modal-btn":
             displayElement(modal, false);
-            break;
-        case "payment-btn":
-            handleSubmit(e)
             break;
         default:
             break;
     }
     
 })
-function render() {
 
-    const menuMarkUp = menuArray.reduce((acc, item) => {
+function render() {
+    
+    menuContainer.innerHTML = menuArray.reduce((acc, item) => {
         return acc + (
             `<div class="menu-item" >
                 <span>${item.emoji}</span>
@@ -61,29 +62,40 @@ function render() {
                      <p class="ingredients">${item.ingredients}</p>
                     <p><strong>R ${item.price}</strong></p>
                 </div>
-                <button type="button" id="${item.id}" class="add-btn" >+</button>
-            </div>`
-        );
+                <button type="button" id="${item.id}" class="add-btn">+</button>
+            </div>`)
     }, "");
-
-    menuContainer.innerHTML = menuMarkUp;
     
     if (orderedItems[0] || itemsAreRemoved) {
-        ordersContainer.style.display = "grid"
-        let totalPrice = 0
-        orderedItemsContainer.innerHTML = orderedItems.reduce((acc, item) => {
-            totalPrice += item.price;
-            return acc + (
-                `<div>
-                    <div id="${item.id}">
-                        <p>${item.name}</p>
-                        <p class="remove">remove</p>
-                    </div>
-                    <p id="${item.id}"style="margin: auto 0 auto">R ${item.price}</p>
-                </div>`
-            )
-        },"") || ""
-        document.querySelector(".total-price").textContent = totalPrice;
+
+        let totalPrice = 0; 
+        ordersContainer.innerHTML = (
+           `<h4 class="orders-header">Your orders</h4>
+            <div class="ordered-items">
+                ${
+                    orderedItems.reduce((acc, item) => {
+                        totalPrice += item.price;
+                        
+                        return acc + (
+                            `<div>
+                                <div id="${item.id}">
+                                    <p>${item.name}</p>
+                                    <p class="remove">remove</p>
+                                </div>
+                                <p id="${item.id}"style="margin: auto 0 auto">R ${item.price}</p>
+                            </div>`);
+                        
+                    },"") || ""
+                }
+            </div>
+            <h4 class="total">
+                Total price:
+                <p class="total-price">R ${totalPrice}</p>
+            </h4>
+            <button type="button" class="orders-btn">Complete your orders</button>`
+        );
+
+        displayElement(ordersContainer, true);
     }
 }
 function addToCart(event) {
@@ -105,24 +117,26 @@ function addToCart(event) {
         
         itemsAreRemoved = true;
     }
-
-    render()   
+    
+    render();
 }
 function displayElement(element, showElement) {
     element.style.display = showElement ? "grid" : "none"
 }
 
-
-function handleSubmit(event) {
-    event.preventDefault();
+function handleSubmit(event) { 
+    
+    let username = form["username"].value
+    ordersContainer.innerHTML = (
+        `<p class="order-complete-message">
+            Thank you ${username},
+             your order is on the way
+         </p>`
+    );
+    
+    form.reset();
     displayElement(modal, false);
-    displayElement(ordersContainer, false);
+    orderedItems =[];
     
-    let container = document.createElement("div");
-    let paragraph = document.createElement("p");
-    paragraph.classList.add("orders-delivery");
-    paragraph.textContent = "Thank you, Your order is on its way";
-    
-    container.append(paragraph);
-    document.querySelector("main").append(container);
-}
+    event.preventDefault();
+}  
