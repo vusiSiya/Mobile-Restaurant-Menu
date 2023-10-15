@@ -113,8 +113,8 @@ button {
 .order-complete-message{
     text-align: center;
     padding: .5em;
-    background-color: green;
-    color: white;
+    background-color: #ECFDF5;
+    color: #065F46;
     border-radius: .5rem;
     font-size: inherit;
 }
@@ -138,8 +138,8 @@ span {
 .modal{
     background-color: white;
     position: fixed;
-    top: 1em;
-    bottom: 1em;
+    top: 0;
+    bottom: 0;
     left: 1.5em;
     right: 1.5em;
     font-family: OverPass;
@@ -148,7 +148,7 @@ span {
     border-radius: .25rem;
     padding: .8em;
     z-index: 1;
-    height: max-content;
+    height: fit-content;
 }
 
 .close-modal-btn {
@@ -161,11 +161,12 @@ span {
 form {
     display: flex;
     flex-direction: column;
-    gap: 1.25em;
+    gap: 1em;
 }
 
 input {
     font-size: 1.3rem;
     padding: .5em;
     font-family: OverPass;
+    border: 2px solid #757575;
 }
