@@ -129,8 +129,8 @@ function handleSubmit(event) {
     let username = form["username"].value
     ordersContainer.innerHTML = (
         `<p class="order-complete-message">
-            Thank you ${username},
-             your order is on the way
+            Thank you ${username}!
+             Your order is on the way
          </p>`
     );
     
