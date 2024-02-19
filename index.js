@@ -3,140 +3,126 @@ const ordersContainer = document.querySelector(".orders");
 const modal = document.querySelector(".modal");
 const form = document.querySelector("form");
 
-const menuArray = [{
-    id: 0,
-    name: "Pizza",
-    ingredients: ["pepperoni", "mushrom", "mozarella"],
-    price: 14,
-    emoji: "🍕"
-}, {
-    id: 1,
-    name: "Hamburger",
-    ingredients: ["beef", "cheese", "lettuce"],
-    price: 12,
-    emoji: "🍔",
-}, {
-    id: 2,
-    name: "Beer",
-    ingredients: ["grain, hops, yeast, water"],
-    price: 12,
-    emoji: "🍺",
-}]
+const menuArray = [
+	{
+		id: 0,
+		name: "Pizza",
+		ingredients: ["pepperoni", "mushrom", "mozarella"],
+		price: 14,
+		count:0,
+		emoji: "🍕"
+	}, {
+		id: 1,
+		name: "Hamburger",
+		ingredients: ["beef", "cheese", "lettuce"],
+		price: 12,
+		count:0,
+		emoji: "🍔",
+	}, {
+		id: 2,
+		name: "Kota",
+		ingredients: ["bread", "russian", "potato chips", "atchar",],
+		price: 12,
+		count:0,
+		emoji: "🥪",
+	}
+];
 
-let orderedItems = [];
-let itemsAreRemoved = false;
-let showMessage;
+const getBoughtItems = ()=>menuArray.filter(item=>item.count);
+const getTotalPrice = ()=>getBoughtItems().reduce((sum,item)=>(sum + item.count * item.price),0);
+
+const increaseItemCount = (id)=>{
+	menuArray.find(item=> item.id === id).count += 1;
+	render();
+}
+const decreaseItemCount = (id)=>{
+	menuArray.find(item=> item.id === id).count -= 1;
+	render();
+}
+
+const removeItem = (id)=>{
+	menuArray.find(item=> item.id === id).count = 0;
+	render();
+}
+form.addEventListener("submit",(e)=>handleSubmit(e));
 
 render();
 
-form.addEventListener("submit",(e)=>handleSubmit(e))
-
-document.addEventListener("click", (e) =>{
-    switch(e.target.className){
-        case "add-btn":
-            addToCart(e);
-            break;
-        case "remove":
-            addToCart(e)
-            break;
-        case "orders-btn":
-            displayElement(modal, true);
-            break;
-        case "close-modal-btn":
-            displayElement(modal, false);
-            break;
-        default:
-            break;
-    }
-    
-})
-
 function render() {
-    
-    menuContainer.innerHTML = menuArray.reduce((acc, item) => {
-        return acc + (
-            `<div class="menu-item" >
-                <span>${item.emoji}</span>
-                <div>
-                    <h4>${item.name}</h4>
-                     <p class="ingredients">${item.ingredients}</p>
-                    <p><strong>R ${item.price}</strong></p>
-                </div>
-                <button type="button" id="${item.id}" class="add-btn">+</button>
-            </div>`)
-    }, "");
-    
-    if (orderedItems[0] || itemsAreRemoved) {
+	
+	menuContainer.innerHTML = menuArray.map(item => {
+		return (
+			`<div class="menu-item" >
+				<span>${item.emoji}</span>
+				<div>
+					<h4>${item.name}</h4>
+					 <p class="ingredients">${item.ingredients}</p>
+					<p><strong>R ${item.price}</strong></p>
+				</div>
+				<button type="button" id="${item.id}" class="add-btn" onclick="increaseItemCount(Number(event.target.id))">+</button>
+			</div>`)
+	}).join("");
 
-        let totalPrice = 0; 
-        ordersContainer.innerHTML = (
-           `<h4 class="orders-header">Your orders</h4>
-            <div class="ordered-items">
-                ${
-                    orderedItems.reduce((acc, item) => {
-                        totalPrice += item.price;
-                        
-                        return acc + (
-                            `<div>
-                                <div id="${item.id}">
-                                    <p>${item.name}</p>
-                                    <p class="remove">remove</p>
-                                </div>
-                                <p id="${item.id}"style="margin: auto 0 auto">R ${item.price}</p>
-                            </div>`);
-                        
-                    },"") || ""
-                }
-            </div>
-            <h4 class="total">
-                Total price:
-                <p class="total-price">R ${totalPrice}</p>
-            </h4>
-            <button type="button" class="orders-btn">Complete your orders</button>`
-        );
+	const totalPrice = getTotalPrice() || 0;
+	
+	ordersContainer.innerHTML = (
+		`<h2 class="orders-header">Your orders</h2>
+		<div class="ordered-items">
+			${
+				getBoughtItems().map(item =>(
+					`<div id="${item.id}">
+						<div id="${item.id}">
+							<h3>${item.name} </h3>
+							<p style="color:red">${" x" + item.count}</p>
+							<h4 
+								class="remove"
+								id="${item.id}"
+								onclick="removeItem(Number(event.target.id))"
+							>
+								remove
+							</h4>
+						</div>
+						<button
+							type="button"
+							id="${item.id}"
+							class="add-btn"
+							style="font-size: medium;font-weight: bold;"
+							onclick="decreaseItemCount(Number(event.target.id))">-</button
+						>
+						<h3 id="${item.id}" style="margin: auto 0 auto">
+							R ${item.price * (item.count || 1)}
+						</h3>
+					</div>`)
+				).join("") || ""
+			}
+		</div>
+		<h4 class="total">
+			Total price:
+			<p class="total-price">R ${totalPrice}</p>
+		</h4>
+		<button type="button" class="orders-btn" onclick="displayElement(modal, true)">Complete your orders</button>`
+	);
 
-        displayElement(ordersContainer, true);
-    }
+	displayElement(ordersContainer, true);
 }
-function addToCart(event) {
-    const {id,className,parentElement} = event.target
-    
-    if(className === "add-btn"){
-        orderedItems.push(menuArray[id])
-    }
-    else {
-        let parentId = parseInt(parentElement.id)
-        let matchingItems = orderedItems.filter(item => item.id === parentId)
-        let itemsNotMatching = orderedItems.filter(item => item.id != parentId)
 
-        let firstEl = matchingItems[0];
-        matchingItems.pop(firstEl)
-        
-        let newArray = [...matchingItems, ...itemsNotMatching ];
-        orderedItems = newArray;
-        
-        itemsAreRemoved = true;
-    }
-    
-    render();
-}
 function displayElement(element, showElement) {
-    element.style.display = showElement ? "grid" : "none"
+	element.style.display = showElement ? "grid" : "none"
 }
 
 function handleSubmit(event) { 
-    
-    let username = form["username"].value
-    ordersContainer.innerHTML = (
-        `<p class="order-complete-message">
-            Thank you ${username}!
-             Your order is on the way
-         </p>`
-    );
-    
-    form.reset();
-    displayElement(modal, false);
-    orderedItems =[];
-    
-    event.preventDefault();
+	
+	let username = form["username"].value;
+	ordersContainer.innerHTML = (
+		`<p class="order-complete-message">
+			Thank you ${username}!
+			 Your order is on the way
+		 </p>`
+	);
+	
+	form.reset();
+	displayElement(modal, false);
+	orderedItems =[];
+	
+	event.preventDefault();
 }  

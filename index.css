@@ -90,6 +90,7 @@ main {
 .orders {
     margin: auto 1.2em;
     display: grid;
+    gap: .2em;
 }
 
 .remove {
@@ -125,11 +126,13 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    gap: .2em;
 }
 
 .ordered-items > div > div {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    column-gap: .2em;
 }
 
 span {
