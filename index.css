@@ -129,9 +129,13 @@ button {
     gap: .2em;
 }
 
+h4.total {
+    text-decoration: underline;
+}
+
 .ordered-items > div > div {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     column-gap: .2em;
 }
 

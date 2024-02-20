@@ -20,7 +20,7 @@ const menuArray = [
 	}, {
 		id: 2,
 		name: "Kota",
-		ingredients: ["bread", "russian", "potato chips", "atchar",],
+		ingredients: ["bread", "russian", "chips", "cheese", "atchaar"],
 		price: 12,
 		count:0,
 		emoji: "🥪",
@@ -53,8 +53,8 @@ function render() {
 			`<div class="menu-item" >
 				<span>${item.emoji}</span>
 				<div>
-					<h4>${item.name}</h4>
-					 <p class="ingredients">${item.ingredients}</p>
+					<h3>${item.name}</h3>
+					 <p class="ingredients">${item.ingredients.join(", ")}</p>
 					<p><strong>R ${item.price}</strong></p>
 				</div>
 				<button
@@ -65,16 +65,17 @@ function render() {
 				>
 					+
 				</button>
-			</div>`)
+			</div><hr/>`)
 	}).join("");
 
 	const totalPrice = getTotalPrice() || 0;
-	
+	const boughtItems = getBoughtItems();
+
 	ordersContainer.innerHTML = (
 		`<h2 class="orders-header">Your orders</h2>
 		<div class="ordered-items">
 			${
-				getBoughtItems().map(item =>(
+				boughtItems.map(item =>(
 					`<div id="${item.id}">
 						<div id="${item.id}">
 							<h3>${item.name} </h3>
@@ -97,7 +98,7 @@ function render() {
 						<h3 id="${item.id}" style="margin: auto 0 auto">
 							R ${item.price * (item.count || 1)}
 						</h3>
-					</div>`)
+					</div><hr/>`)
 				).join("") || ""
 			}
 		</div>
@@ -105,13 +106,15 @@ function render() {
 			Total price:
 			<p class="total-price">R ${totalPrice}</p>
 		</h4>
-		<button
-			type="button"
-			class="orders-btn"
-			onclick="displayElement(modal, true)"
-		>
-			Complete your orders
-		</button>`
+		${ boughtItems.length && (
+			`<button
+				type="button"
+				class="orders-btn"
+				onclick="displayElement(modal, true)"
+			>
+				Complete your orders
+			</button>`) || ""
+		}`
 	);
 
 	displayElement(ordersContainer, true);
