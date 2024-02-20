@@ -47,16 +47,15 @@
 
         <div class="modal" style="display:none;">
             <div style="display:flex; justify-content:flex-end;">
-                <button class="close-modal-btn">X</button>
+                <button class="close-modal-btn" onclick="displayElement(modal,false)">X</button>
             </div>
             
             <h2>Enter Card Details</h2>
-            <form> 
+            <form onsubmit="handleSubmit(event)"> 
                 <input required type="text"  name="username" placeholder="Enter Your Name" />
                 <input required type="number"  name="card-number" placeholder="Enter Your Card Number" />
                 <input required type="number"  name="cvv-number" placeholder="Enter Your CVV" />
-                <!--<button type="submit" class="payment-btn">Pay</button>-->
-                <button class="payment-btn">Pay</button>
+                <button type="submit" class="payment-btn">Pay</button>
             </form>
         </div>
     </main>

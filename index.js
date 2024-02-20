@@ -1,7 +1,6 @@
 const menuContainer = document.querySelector(".menu");
 const ordersContainer = document.querySelector(".orders");
 const modal = document.querySelector(".modal");
-const form = document.querySelector("form");
 
 const menuArray = [
 	{
@@ -44,7 +43,6 @@ const removeItem = (id)=>{
 	menuArray.find(item=> item.id === id).count = 0;
 	render();
 }
-form.addEventListener("submit",(e)=>handleSubmit(e));
 
 render();
 
@@ -59,7 +57,14 @@ function render() {
 					 <p class="ingredients">${item.ingredients}</p>
 					<p><strong>R ${item.price}</strong></p>
 				</div>
-				<button type="button" id="${item.id}" class="add-btn" onclick="increaseItemCount(Number(event.target.id))">+</button>
+				<button
+					type="button"
+					id="${item.id}"
+					class="add-btn"
+					onclick="increaseItemCount(Number(event.target.id))"
+				>
+					+
+				</button>
 			</div>`)
 	}).join("");
 
@@ -79,7 +84,7 @@ function render() {
 								id="${item.id}"
 								onclick="removeItem(Number(event.target.id))"
 							>
-								remove
+								Remove
 							</h4>
 						</div>
 						<button
@@ -100,18 +105,25 @@ function render() {
 			Total price:
 			<p class="total-price">R ${totalPrice}</p>
 		</h4>
-		<button type="button" class="orders-btn" onclick="displayElement(modal, true)">Complete your orders</button>`
+		<button
+			type="button"
+			class="orders-btn"
+			onclick="displayElement(modal, true)"
+		>
+			Complete your orders
+		</button>`
 	);
 
 	displayElement(ordersContainer, true);
 }
 
 function displayElement(element, showElement) {
-	element.style.display = showElement ? "grid" : "none"
+	element.style.display = showElement ? "grid" : "none";
 }
 
 function handleSubmit(event) { 
-	
+	const form = document.querySelector("form");
+
 	let username = form["username"].value;
 	ordersContainer.innerHTML = (
 		`<p class="order-complete-message">
