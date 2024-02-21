@@ -6,7 +6,7 @@
   </a>
 </p>
 <h3>
-  <a href="https://siyabonga-mobile-restaurant-menu.netlify.app/">
+  <a href="https://mobile-restaurant-menu-siya.netlify.app/">
     <strong>Live Demo</strong>
   </a>🚀
 </h3>
